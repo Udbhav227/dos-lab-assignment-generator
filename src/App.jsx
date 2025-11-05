@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { useDownloadProcess } from "./hooks/useDownloadProcess";
 
 import { Header } from "./components/Header";
-import { MainForm } from "./components/MainForm";
-import { PreviewDownload } from "./components/PreviewDownload";
+import { MainForm } from "./components/FormPanel";
+import { PreviewDownload } from "./components/PreviewPanel";
 import { Footer } from "./components/Footer";
 
 export default function App() {

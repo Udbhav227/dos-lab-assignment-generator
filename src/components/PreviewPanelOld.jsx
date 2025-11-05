@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { ProgressBar } from "./ProgressBar";
 
-export function PreviewDownload({
+export function PreviewPanel ({
   regNo,
   assignment,
   studentDetails,

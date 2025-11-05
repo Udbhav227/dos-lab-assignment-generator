@@ -4,7 +4,9 @@ import { AnimatePresence } from "framer-motion";
 import { ConditionalForm } from "./ConditionalForm";
 import { inputSelectBase } from "../styles/common";
 
-export function MainForm({
+export function FormPanel({
+  hostname,
+  setHostname,
   regNo,
   setRegNo,
   assignment,
@@ -15,6 +17,15 @@ export function MainForm({
 }) {
   return (
     <FormSection>
+      <label>
+        <LabelText>Host Name</LabelText>
+        <StyledInput
+          value={hostname}
+          onChange={(e) => setHostname(e.target.value)}
+          placeholder="e.g. student@iteradmin-Vostro-1234"
+        />
+      </label>
+
       <label>
         <LabelText>Registration Number</LabelText>
         <StyledInput
@@ -45,7 +56,7 @@ export function MainForm({
 
       <InfoText>
         After filling inputs the{" "}
-        <span style={{ fontWeight: 500, color: "#6ee7b7" }}>Download</span>{" "}
+        <span style={{ fontWeight: 500, color: "#6ee7b7", }}>Download</span>{" "}
         button will be enabled.
       </InfoText>
     </FormSection>
@@ -85,6 +96,7 @@ const StyledSelect = styled.select`
 `;
 
 const InfoText = styled.div`
-  font-size: 0.875rem;
+  text-align: center;
+  font-size: 0.75rem;
   color: #94a3b8;
 `;

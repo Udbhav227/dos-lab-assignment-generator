@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Light Mode Terminal Output</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+      body {
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+      .terminal-container {
+        background-color: #ffffff;
+        color: #333333;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 700px;
+        white-space: pre-wrap;
+        font-size: 14px;
+        line-height: 1.5;
+        overflow-x: auto;
+      }
+      .prompt {
+        color: #007acc;
+      }
+      .command {
+        color: #a31515;
+      }
+      .output {
+        color: #333333;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+      #outputImage {
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div id="terminalOutput" class="terminal-container">
+        <span class="prompt"
+          >student@iteradmin-Vostro-3268:~/DOS_1108/DOSass2$</span
+        >
+        <span class="command">echo -e "50\n10" > a.txt</span>
+        <span class="prompt"
+          >student@iteradmin-Vostro-3268:~/DOS_1108/DOSass2$</span
+        >
+        <span class="command">echo -e "30\n60" > b.txt</span>
+        <span class="prompt"
+          >student@iteradmin-Vostro-3268:~/DOS_1108/DOSass2$</span
+        >
+        <span class="command">echo -e "20\n40" > c.txt</span>
+        <span class="prompt"
+          >student@iteradmin-Vostro-3268:~/DOS_1108/DOSass2$</span
+        >
+        <span class="command">cat a.txt b.txt c.txt</span>
+        <span class="output">50</span>
+        <span class="output">10</span>
+        <span class="output">30</span>
+        <span class="output">60</span>
+        <span class="output">20</span>
+        <span class="output">40</span>
+        <span class="prompt"
+          >student@iteradmin-Vostro-3268:~/DOS_1108/DOSass2$</span
+        >
+        <span class="command">nano prog</span>
+      </div>
+
+      <button onclick="generateTerminalImage()">
+        Generate Light Mode Image
+      </button>
+      <img id="outputImage" src="" alt="Generated Terminal Output" />
+    </div>
+
+    <script>
+      function generateTerminalImage() {
+        const terminalElement = document.getElementById("terminalOutput");
+        html2canvas(terminalElement, {
+          backgroundColor: "#ffffff", // Ensure the background is white in the screenshot
+        }).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          document.getElementById("outputImage").src = imgData;
+
+          // Optionally, you can trigger a download of the image
+          // const link = document.createElement('a');
+          // link.href = imgData;
+          // link.download = 'terminal_output_light_mode.png';
+          // document.body.appendChild(link);
+          // link.click();
+          // document.body.removeChild(link);
+        });
+      }
+
+      // Function to update terminal content dynamically
+      function updateTerminalContent(assignmentNumber, regNo) {
+        let content = "";
+        let folder = `DOS_${regNo}/DOSass${assignmentNumber}`;
+
+        if (assignmentNumber === 2) {
+          content = `
+<span class="prompt">student@iteradmin-Vostro-3268:~/${folder}$</span> <span class="command">echo -e "50\\n10" > a.txt</span>
+<span class="prompt">student@iteradmin-Vostro-3268:~/${folder}$</span> <span class="command">echo -e "30\\n60" > b.txt</span>
+<span class="prompt">student@iteradmin-Vostro-3268:~/${folder}$</span> <span class="command">echo -e "20\\n40" > c.txt</span>
+<span class="prompt">student@iteradmin-Vostro-3268:~/${folder}$</span> <span class="command">cat a.txt b.txt c.txt</span>
+<span class="output">50</span>
+<span class="output">10</span>
+<span class="output">30</span>
+<span class="output">60</span>
+<span class="output">20</span>
+<span class="output">40</span>
+<span class="prompt">student@iteradmin-Vostro-3268:~/${folder}$</span> <span class="command">nano prog</span>
+                `;
+        } else if (assignmentNumber === 3) {
+          // Example for another assignment
+          content = `
+<span class="prompt">student@iteradmin-Vostro-3268:~/${folder}$</span> <span class="command">ls -l</span>
+<span class="output">total 8</span>
+<span class="output">-rw-r--r-- 1 student student 123 Jan 1 10:00 assignment3.c</span>
+<span class="output">-rw-r--r-- 1 student student 456 Jan 1 10:05 Makefile</span>
+<span class="prompt">student@iteradmin-Vostro-3268:~/${folder}$</span> <span class="command">make</span>
+<span class="output">gcc assignment3.c -o assignment3</span>
+<span class="prompt">student@iteradmin-Vostro-3268:~/${folder}$</span> <span class="command">./assignment3</span>
+<span class="output">Hello from Assignment 3!</span>
+                `;
+        }
+        // Add more else if blocks for other assignments
+
+        document.getElementById("terminalOutput").innerHTML = content;
+      }
+
+      // Example of how to use updateTerminalContent (you would link this to user input)
+      // For assignment 2, reg no 1108:
+      // updateTerminalContent(2, 1108);
+    </script>
+  </body>
+</html>
