@@ -56,7 +56,7 @@ const TerminalContainer = styled.div`
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: thin;
-  scrollbar-color: #888 transparent;
+  scrollbar-color: black transparent;
 `;
 
 
