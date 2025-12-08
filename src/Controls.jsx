@@ -58,6 +58,25 @@ const Input = styled.input`
   }
 `;
 
+const Footer = styled(Label)`
+  margin-top: auto;
+  margin-bottom: 40px;
+  text-align: center;
+  line-height: 1.5;
+`;
+
+const StyledLink = styled.a`
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #7dd3fc;
+    text-decoration: underline;
+  }
+`;
+
 const PrintButton = styled.button`
   background: #38bdf8;
   color: #0f172a;
@@ -93,7 +112,7 @@ export const Controls = ({ config, setConfig, onPrint }) => {
             borderRadius: 4,
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <Banana size={20} />
@@ -131,7 +150,7 @@ export const Controls = ({ config, setConfig, onPrint }) => {
           value={config.assignNo}
           onChange={handleChange}
           disabled={true}
-          style={{color: "grey", cursor: "not-allowed"}}
+          style={{ color: "grey", cursor: "not-allowed" }}
         />
       </FieldGroup>
 
@@ -139,6 +158,12 @@ export const Controls = ({ config, setConfig, onPrint }) => {
         <Printer size={18} />
         Print / Save as PDF
       </PrintButton>
+
+      {/* Updated Footer with StyledLink */}
+      <Footer>
+        Made with ❤️ by{" "}
+        <StyledLink href="mailto:r6913096@gmail.com">Corvo</StyledLink>
+      </Footer>
     </Panel>
   );
 };
