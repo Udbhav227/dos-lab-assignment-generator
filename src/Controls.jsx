@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as LabelPrimitive from "@radix-ui/react-label";
-import { Download, Printer, Banana } from "lucide-react";
+import { Printer, Banana } from "lucide-react";
 
 const Panel = styled.aside`
   width: 350px;
@@ -60,8 +60,12 @@ const Input = styled.input`
 
 const Footer = styled(Label)`
   margin-top: auto;
-  margin-bottom: 40px;
+  margin-bottom: 2rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
   line-height: 1.5;
 `;
 
@@ -96,6 +100,17 @@ const PrintButton = styled.button`
   }
 `;
 
+const BadgeWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  opacity: 0.9;
+  
+  img {
+    height: 20px;
+    border-radius: 3px;
+  }
+`;
+
 export const Controls = ({ config, setConfig, onPrint }) => {
   const handleChange = (e) => {
     setConfig({ ...config, [e.target.name]: e.target.value });
@@ -112,7 +127,7 @@ export const Controls = ({ config, setConfig, onPrint }) => {
             borderRadius: 4,
             display: "flex",
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "center"
           }}
         >
           <Banana size={20} />
@@ -150,7 +165,7 @@ export const Controls = ({ config, setConfig, onPrint }) => {
           value={config.assignNo}
           onChange={handleChange}
           disabled={true}
-          style={{ color: "grey", cursor: "not-allowed" }}
+          style={{color: "grey", cursor: "not-allowed"}}
         />
       </FieldGroup>
 
@@ -160,8 +175,16 @@ export const Controls = ({ config, setConfig, onPrint }) => {
       </PrintButton>
 
       <Footer>
-        Made with ❤️ by{" "}
-        <StyledLink href="mailto:r6913096@gmail.com">Corvo</StyledLink>
+        <BadgeWrapper>
+          <img 
+            src="https://visitor-badge.laobi.icu/badge?page_id=dposlabgen.home&left_text=Visitors+Count" 
+            alt="visitor count"
+          />
+        </BadgeWrapper>
+        
+        <span>
+          Made with ❤️ by <StyledLink href="mailto:r6913096@gmail.com">Corvo</StyledLink>
+        </span>
       </Footer>
     </Panel>
   );
