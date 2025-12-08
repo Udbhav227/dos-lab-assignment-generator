@@ -159,7 +159,6 @@ export const Controls = ({ config, setConfig, onPrint }) => {
         Print / Save as PDF
       </PrintButton>
 
-      {/* Updated Footer with StyledLink */}
       <Footer>
         Made with ❤️ by{" "}
         <StyledLink href="mailto:r6913096@gmail.com">Corvo</StyledLink>
