@@ -38,6 +38,62 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
+const MobileWarningOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.95);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+
+  @media (min-width: 1025px) {
+    display: none;
+  }
+`;
+
+const WarningBox = styled.div`
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  h2 {
+    color: #38bdf8;
+    margin-top: 0;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+`;
+
+const ContinueButton = styled.button`
+  background: #38bdf8;
+  color: #0f172a;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
 const Layout = styled.div`
   display: flex;
   height: 100vh;
@@ -70,6 +126,7 @@ export default function App() {
     regNo: "234101234",
     assignNo: "3",
   });
+  const [showMobileWarning, setShowMobileWarning] = useState(true);
 
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -81,7 +138,7 @@ export default function App() {
     const fontSize = 10;
     const contentWidth = pageWidth - margin * 2;
 
-    let cursorY = 10;
+    let cursorY = 20;
 
     doc.setFont("courier", "normal");
     doc.setFontSize(fontSize);
@@ -89,17 +146,17 @@ export default function App() {
     const checkPageBreak = (heightNeeded = lineHeight) => {
       if (cursorY + heightNeeded > pageHeight - margin) {
         doc.addPage();
-        cursorY = 20; // Reset to top margin
+        cursorY = 20;
       }
     };
 
     const drawPrompt = (cmd) => {
-      const userHost = `${"student"}@${config.hostName}`;
+      const userHost = `student@${config.hostName}`;
       const path = `~/DOS_${config.regNo}/DOSass${config.assignNo}`;
 
       checkPageBreak();
 
-      doc.setTextColor(78, 154, 6); // #4e9a06
+      doc.setTextColor(78, 154, 6);
       doc.setFont("courier", "bold");
       doc.text(userHost, margin, cursorY);
       const userWidth = doc.getTextWidth(userHost);
@@ -108,7 +165,7 @@ export default function App() {
       doc.text(":", margin + userWidth, cursorY);
       const sep1Width = doc.getTextWidth(":");
 
-      doc.setTextColor(52, 101, 164); // #3465a4
+      doc.setTextColor(52, 101, 164);
       doc.text(path, margin + userWidth + sep1Width, cursorY);
       const pathWidth = doc.getTextWidth(path);
 
@@ -118,7 +175,7 @@ export default function App() {
 
       if (cmd) {
         const startX = margin + userWidth + sep1Width + pathWidth + sep2Width;
-        doc.setFont("courier", "normal"); // Commands aren't usually bold in terminals, but adjustable
+        doc.setFont("courier", "normal");
         doc.text(cmd, startX, cursorY);
       }
 
@@ -129,7 +186,7 @@ export default function App() {
       if (!text) return;
 
       doc.setFont("courier", "normal");
-      doc.setTextColor(0, 0, 0); // Black
+      doc.setTextColor(0, 0, 0);
 
       const lines = doc.splitTextToSize(text, contentWidth);
 
@@ -142,19 +199,19 @@ export default function App() {
 
     const drawHeader = (id, text) => {
       checkPageBreak(lineHeight * 2);
-      cursorY += 5; // Extra spacing before header
+      cursorY += 5;
 
       doc.setFont("courier", "bold");
-      doc.setTextColor(100, 100, 100); // Greyish
+      doc.setTextColor(100, 100, 100);
       doc.text(`QUESTION ${id}: ${text.toUpperCase()}`, margin, cursorY);
 
       const textWidth = doc.getTextWidth(
         `QUESTION ${id}: ${text.toUpperCase()}`
       );
-      doc.setDrawColor(221, 221, 221); // Light grey line
+      doc.setDrawColor(221, 221, 221);
       doc.line(margin, cursorY + 1, margin + textWidth, cursorY + 1);
 
-      doc.setFont("courier", "normal"); // Reset
+      doc.setFont("courier", "normal");
       cursorY += lineHeight * 1.5;
     };
 
@@ -186,6 +243,22 @@ export default function App() {
   return (
     <>
       <GlobalStyles />
+
+      {showMobileWarning && (
+        <MobileWarningOverlay>
+          <WarningBox>
+            <h2>Desktop Recommended</h2>
+            <p>
+              This application is designed for desktop use. Layout might not
+              look correct on smaller screens.
+            </p>
+            <ContinueButton onClick={() => setShowMobileWarning(false)}>
+              I understand, continue
+            </ContinueButton>
+          </WarningBox>
+        </MobileWarningOverlay>
+      )}
+
       <Layout>
         <Controls config={config} setConfig={setConfig} onPrint={generatePDF} />
 
