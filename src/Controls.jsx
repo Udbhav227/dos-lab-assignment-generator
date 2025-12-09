@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as LabelPrimitive from "@radix-ui/react-label";
-import { Printer, Banana } from "lucide-react";
+import { Download, Banana } from "lucide-react";
 
 const Panel = styled.aside`
   width: 350px;
@@ -15,10 +15,6 @@ const Panel = styled.aside`
   position: sticky;
   top: 0;
   color: #f8fafc;
-
-  @media print {
-    display: none;
-  }
 `;
 
 const Title = styled.h1`
@@ -104,7 +100,7 @@ const BadgeWrapper = styled.div`
   display: flex;
   justify-content: center;
   opacity: 0.9;
-  
+
   img {
     height: 20px;
     border-radius: 3px;
@@ -127,7 +123,7 @@ export const Controls = ({ config, setConfig, onPrint }) => {
             borderRadius: 4,
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <Banana size={20} />
@@ -165,25 +161,26 @@ export const Controls = ({ config, setConfig, onPrint }) => {
           value={config.assignNo}
           onChange={handleChange}
           disabled={true}
-          style={{color: "grey", cursor: "not-allowed"}}
+          style={{ color: "grey", cursor: "not-allowed" }}
         />
       </FieldGroup>
 
       <PrintButton onClick={onPrint}>
-        <Printer size={18} />
-        Print / Save as PDF
+        <Download size={18} />
+        Download PDF
       </PrintButton>
 
       <Footer>
         <BadgeWrapper>
-          <img 
-            src="https://visitor-badge.laobi.icu/badge?page_id=dposlabgen.home&left_text=Visitors+Count" 
+          <img
+            src="https://visitor-badge.laobi.icu/badge?page_id=dposlabgen.home&left_text=Visitors+Count"
             alt="visitor count"
           />
         </BadgeWrapper>
-        
+
         <span>
-          Made with ❤️ by <StyledLink href="mailto:r6913096@gmail.com">Corvo</StyledLink>
+          Made with ❤️ by{" "}
+          <StyledLink href="mailto:r6913096@gmail.com">Corvo</StyledLink>
         </span>
       </Footer>
     </Panel>
