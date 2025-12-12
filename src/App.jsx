@@ -220,7 +220,7 @@ export default function App() {
     assignment3.forEach((q) => {
       drawHeader(q.id, q.question);
 
-      drawPrompt(`nano ${q.filename}`);
+      drawPrompt(`cat ${q.filename}`);
       drawOutput(q.code);
 
       q.commands.forEach((cmdStep) => {

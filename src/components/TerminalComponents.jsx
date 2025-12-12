@@ -105,7 +105,7 @@ export const ExerciseBlock = ({
         user={user} 
         host={host} 
         path={path} 
-        cmd={`nano ${data.filename}`} 
+        cmd={`cat ${data.filename}`} 
       />
       <Output>{data.code}</Output>
 
