@@ -1,3 +1,147 @@
+export const assignment2 = [
+  {
+    id: 1,
+    filename: "prog",
+    question: "Merge and Sort Files",
+    code: `#!/bin/bash
+cat a.txt b.txt c.txt | sort > result
+echo "--- Sorted Output ---"
+cat result`,
+    commands: [
+      { cmd: 'echo -e "50\\n10" > a.txt' },
+      { cmd: 'echo -e "30\\n60" > b.txt' },
+      { cmd: 'echo -e "20\\n40" > c.txt' },
+      { cmd: "cat a.txt b.txt c.txt", output: "50\n10\n30\n60\n20\n40" },
+      { cmd: "chmod +x prog" },
+      {
+        cmd: "./prog",
+        output: "--- Sorted Output ---\n10\n20\n30\n40\n50\n60",
+      },
+    ],
+  },
+  {
+    id: 2,
+    filename: "systeminfo",
+    question: "System Information",
+    code: `#!/bin/bash
+echo "Login Name: $USER"
+echo "System Name: $HOSTNAME"
+echo "Shell Type: $SHELL"
+echo "Current Working Directory: $PWD"
+echo -e "\\nFiles in Current Directory (ls -l):"
+ls -l`,
+    commands: [
+      { cmd: "chmod +x systeminfo" },
+      {
+        cmd: "./systeminfo",
+        output:
+          "Login Name: student\nSystem Name: iteradmin-Vostro-3268\nShell Type: /bin/bash\nCurrent Working Directory: /home/student/DOS_1108/DOSass2\n\nFiles in Current Directory (ls -l):\ntotal 24\n-rw-rw-r-- 1 student student 6 Oct 11 11:58 a.txt\n-rw-rw-r-- 1 student student 6 Oct 11 11:59 b.txt\n-rw-rw-r-- 1 student student 6 Oct 11 11:59 c.txt\n-rwxrwxr-x 1 student student 90 Oct 11 12:03 prog\n-rw-rw-r-- 1 student student 18 Oct 11 12:03 result\n-rwxrwxr-x 1 student student 229 Oct 11 12:14 systeminfo",
+      },
+    ],
+  },
+  {
+    id: 3,
+    filename: "dtcal",
+    question: "Date and Calendar",
+    code: `#!/bin/bash
+SYSTEM_DATE=$(date '+%a %d %b %Y')
+echo "Date: $SYSTEM_DATE"
+echo -e "\\nCalendar for March 2022:"
+cal 3 2022`,
+    commands: [
+      { cmd: "chmod +x dtcal" },
+      {
+        cmd: "./dtcal",
+        output:
+          "Date: Sat 11 Oct 2025\n\nCalendar for March 2022:\n     March 2022\nSu Mo Tu We Th Fr Sa\n       1  2  3  4  5\n 6  7  8  9 10 11 12\n13 14 15 16 17 18 19\n20 21 22 23 24 25 26\n27 28 29 30 31",
+      },
+    ],
+  },
+  {
+    id: 4,
+    filename: "nvwc",
+    question: "File Stats (Specific File)",
+    code: `#!/bin/bash
+FILENAME="dtcal"
+LINE_COUNT=$(wc -l < "$FILENAME")
+WORD_COUNT=$(wc -w < "$FILENAME")
+CHAR_COUNT=$(wc -m < "$FILENAME")
+echo "Filename: $FILENAME"
+echo "Line count: $LINE_COUNT"
+echo "Word count: $WORD_COUNT"
+echo "Char count: $CHAR_COUNT"`,
+    commands: [
+      { cmd: "chmod +x nvwc" },
+      {
+        cmd: "./nvwc",
+        output:
+          "Filename: dtcal\nLine count: 5\nWord count: 19\nChar count: 122",
+      },
+    ],
+  },
+  {
+    id: 5,
+    filename: "nvwc2",
+    question: "File Stats (Argument)",
+    code: `#!/bin/bash
+FILENAME=$1
+LINE_COUNT=$(wc -l < "$FILENAME")
+WORD_COUNT=$(wc -w < "$FILENAME")
+CHAR_COUNT=$(wc -m < "$FILENAME")
+echo "Filename: $FILENAME"
+echo "Line count: $LINE_COUNT"
+echo "Word count: $WORD_COUNT"
+echo "Char count: $CHAR_COUNT"`,
+    commands: [
+      { cmd: "chmod +x nvwc2" },
+      {
+        cmd: "./nvwc2 a.txt",
+        output: "Filename: a.txt\nLine count: 2\nWord count: 2\nChar count: 6",
+      },
+    ],
+  },
+  {
+    id: 6,
+    filename: "darg",
+    question: "Command Line Arguments",
+    code: `#!/bin/bash
+echo "Total Number of Arguments: $#"
+echo "First Argument: $1"
+echo "Second Argument: $2"
+echo "--- All Arguments ---"
+echo "$@"`,
+    commands: [
+      { cmd: "chmod +x darg" },
+      {
+        cmd: "./darg apple mango banana",
+        output:
+          "Total Number of Arguments: 3\nFirst Argument: apple\nSecond Argument: mango\n--- All Arguments ---\napple mango banana",
+      },
+    ],
+  },
+  {
+    id: 7,
+    filename: "ndisp",
+    question: "Display Top and Bottom Lines",
+    code: `#!/bin/bash
+N=$1
+M=$2
+FILENAME=$3
+echo "First $N Lines of $FILENAME ---"
+head -n $N "$FILENAME"
+echo "Last $M Lines of $FILENAME ---"
+tail -n $M "$FILENAME"`,
+    commands: [
+      { cmd: "chmod +x ndisp" },
+      {
+        cmd: "./ndisp 3 1 a.txt",
+        output:
+          "First 3 Lines of a.txt ---\n50\n10\nLast 1 Lines of a.txt ---\n10",
+      },
+    ],
+  },
+];
+
 export const assignment3 = [
   {
     id: 1,
@@ -13,8 +157,8 @@ echo $((a / b))
 echo $((a % b))`,
     commands: [
       { cmd: "chmod +x iaop" },
-      { cmd: "echo -e \"50\\n10\" | ./iaop", output: "60\n40\n500\n5\n0" }
-    ]
+      { cmd: 'echo -e "50\\n10" | ./iaop', output: "60\n40\n500\n5\n0" },
+    ],
   },
   {
     id: 2,
@@ -29,8 +173,8 @@ echo "$(echo "$a * $b" | bc -l)"
 echo "$(echo "scale=4; $a / $b" | bc -l)"`,
     commands: [
       { cmd: "chmod +x faop" },
-      { cmd: "echo -e \"5.5\\n2.0\" | ./faop", output: "7.5\n3.5\n11.0\n2.7500" }
-    ]
+      { cmd: 'echo -e "5.5\\n2.0" | ./faop', output: "7.5\n3.5\n11.0\n2.7500" },
+    ],
   },
   {
     id: 3,
@@ -44,8 +188,8 @@ gross=$(echo "scale=4; $basic + $da + $hra" | bc -l)
 echo "$gross"`,
     commands: [
       { cmd: "chmod +x gross_salary" },
-      { cmd: "echo \"10000\" | ./gross_salary", output: "17000.0000" }
-    ]
+      { cmd: 'echo "10000" | ./gross_salary', output: "17000.0000" },
+    ],
   },
   {
     id: 4,
@@ -69,8 +213,11 @@ echo "$even"
 echo "$odd"`,
     commands: [
       { cmd: "chmod +x even_odd_count" },
-      { cmd: "printf \"1\\n2\\n3\\n4\\n5\\n6\\n7\\n8\\n9\\n10\\n\" | ./even_odd_count", output: "5\n5" }
-    ]
+      {
+        cmd: 'printf "1\\n2\\n3\\n4\\n5\\n6\\n7\\n8\\n9\\n10\\n" | ./even_odd_count',
+        output: "5\n5",
+      },
+    ],
   },
   {
     id: 5,
@@ -92,8 +239,8 @@ else
 fi`,
     commands: [
       { cmd: "chmod +x profit_loss" },
-      { cmd: "echo -e \"100\\n150\" | ./profit_loss", output: "Profit\n50" }
-    ]
+      { cmd: 'echo -e "100\\n150" | ./profit_loss', output: "Profit\n50" },
+    ],
   },
   {
     id: 6,
@@ -116,8 +263,8 @@ else
 fi`,
     commands: [
       { cmd: "chmod +x leap_year" },
-      { cmd: "./leap_year 2024", output: "Leap Year" }
-    ]
+      { cmd: "./leap_year 2024", output: "Leap Year" },
+    ],
   },
   {
     id: 7,
@@ -133,8 +280,8 @@ else
 fi`,
     commands: [
       { cmd: "chmod +x allow" },
-      { cmd: "echo -e \"22\\n80\" | ./allow", output: "Allowed for Semester" }
-    ]
+      { cmd: 'echo -e "22\\n80" | ./allow', output: "Allowed for Semester" },
+    ],
   },
   {
     id: 8,
@@ -154,8 +301,8 @@ fi
 echo "$largest"`,
     commands: [
       { cmd: "chmod +x large3" },
-      { cmd: "./large3 12 7 25", output: "25" }
-    ]
+      { cmd: "./large3 12 7 25", output: "25" },
+    ],
   },
   {
     id: 9,
@@ -183,8 +330,11 @@ case "$input" in
 esac`,
     commands: [
       { cmd: "chmod +x check_char" },
-      { cmd: "echo \"a\" | ./check_char", output: "You entered a lower case alphabet" }
-    ]
+      {
+        cmd: 'echo "a" | ./check_char',
+        output: "You entered a lower case alphabet",
+      },
+    ],
   },
   {
     id: 10,
@@ -221,8 +371,8 @@ case "$d" in
 esac`,
     commands: [
       { cmd: "chmod +x class_time" },
-      { cmd: "echo \"Sunday\" | ./class_time", output: "Holiday" }
-    ]
+      { cmd: 'echo "Sunday" | ./class_time', output: "Holiday" },
+    ],
   },
   {
     id: 11,
@@ -242,8 +392,12 @@ fi`,
       { cmd: "cat > file1.txt << 'EOF'\nhello\nworld\nEOF" },
       { cmd: "cat > file2.txt << 'EOF'\nhello\nworld\nEOF" },
       { cmd: "chmod +x filechk" },
-      { cmd: "./filechk file1.txt file2.txt", output: "Files file1.txt and file2.txt have same content.\nSo file2.txt is deleted." }
-    ]
+      {
+        cmd: "./filechk file1.txt file2.txt",
+        output:
+          "Files file1.txt and file2.txt have same content.\nSo file2.txt is deleted.",
+      },
+    ],
   },
   {
     id: 12,
@@ -286,7 +440,7 @@ esac
 echo "$op1 $operator $op2 = $result"`,
     commands: [
       { cmd: "chmod +x calculator" },
-      { cmd: "./calculator 12 + 5", output: "12 + 5 = 17" }
-    ]
-  }
+      { cmd: "./calculator 12 + 5", output: "12 + 5 = 17" },
+    ],
+  },
 ];

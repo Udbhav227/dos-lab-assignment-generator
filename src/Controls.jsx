@@ -54,6 +54,61 @@ const Input = styled.input`
   }
 `;
 
+const RadioGroup = styled.div`
+  display: flex;
+  gap: 20px;
+  padding: 4px 0;
+`;
+
+const RadioLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  color: #fff;
+  font-size: 0.9rem;
+  user-select: none;
+`;
+
+const RadioInput = styled.input`
+  appearance: none;
+  background-color: #0f172a;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 1px solid #334155;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+
+  &::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #38bdf8;
+  }
+
+  &:checked::before {
+    transform: scale(1);
+  }
+
+  &:focus {
+    border-color: #38bdf8;
+    outline: none;
+  }
+
+  &:disabled {
+    border-color: #334155;
+    background-color: #1e293b;
+  }
+`;
+
 const Footer = styled(Label)`
   margin-top: auto;
   margin-bottom: 2rem;
@@ -154,15 +209,22 @@ export const Controls = ({ config, setConfig, onPrint }) => {
       </FieldGroup>
 
       <FieldGroup>
-        <Label htmlFor="assignNo">Assignment No</Label>
-        <Input
-          id="assignNo"
-          name="assignNo"
-          value={config.assignNo}
-          onChange={handleChange}
-          disabled={true}
-          style={{ color: "grey", cursor: "not-allowed" }}
-        />
+        <Label>Assignment No</Label>
+        <RadioGroup>
+          {[1, 2, 3].map((num) => (
+            <RadioLabel key={num} disabled={num === 1}>
+              <RadioInput
+                type="radio"
+                name="assignNo"
+                value={num}
+                checked={String(config.assignNo) === String(num)}
+                onChange={handleChange}
+                disabled={num === 1}
+              />
+              {num}
+            </RadioLabel>
+          ))}
+        </RadioGroup>
       </FieldGroup>
 
       <PrintButton onClick={onPrint}>

@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import jsPDF from "jspdf";
 
-import { assignment3 } from "./data/assignmentData";
+import { assignment2, assignment3 } from "./data/assignmentData";
 import {
   PageContainer,
   ExerciseBlock,
@@ -124,9 +124,12 @@ export default function App() {
   const [config, setConfig] = useState({
     hostName: "iteradmin-Vostro-1234",
     regNo: "234101234",
-    assignNo: "3",
+    assignNo: "2", // Changed default to 2 as requested
   });
   const [showMobileWarning, setShowMobileWarning] = useState(true);
+
+  // Dynamic selection of assignment data
+  const currentAssignment = config.assignNo === "3" ? assignment3 : assignment2;
 
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -217,7 +220,7 @@ export default function App() {
 
     drawPrompt(`echo "Starting Assignment ${config.assignNo}"`);
 
-    assignment3.forEach((q) => {
+    currentAssignment.forEach((q) => {
       drawHeader(q.id, q.question);
 
       drawPrompt(`cat ${q.filename}`);
@@ -273,7 +276,7 @@ export default function App() {
                   cmd={`echo "Starting Assignment ${config.assignNo}"`}
                 />
 
-                {assignment3.map((q) => (
+                {currentAssignment.map((q) => (
                   <ExerciseBlock
                     key={q.id}
                     data={q}
